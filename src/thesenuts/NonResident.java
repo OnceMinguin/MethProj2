@@ -11,21 +11,22 @@ public class NonResident extends Student{
     public NonResident(){
 
     }
-    public NonResident(String name, Major major, int creditHours){
-        super(name,major, creditHours);
+    public NonResident(String name, Major major, int creditHours, String type){
+
+        super(name,major, creditHours, type);
     }
     @Override
     public void tuitionDue() {
         double tuitionDue = INITIAL_TUITION;
-        if (this.creditHours > CREDIT_FULL){
+        if (this.creditHours >= CREDIT_FULL){
             tuitionDue = FULL_NONRESIDENT + UNIVERSITY_FEE;
             if (this.creditHours > CREDIT_OVERLOAD){
-                tuitionDue += PART_NONRESIDENT * (this.creditHours - 16);
+                tuitionDue += PART_NONRESIDENT * (this.creditHours - CREDIT_OVERLOAD);
             }
         }
         else{
             tuitionDue = (PART_NONRESIDENT * this.creditHours) + PART_TIME_DEPRECIATION * UNIVERSITY_FEE;
         }
-        this.tuitionDue = tuitionDue;
+        this.tuitionDue = tuitionDue - this.tuitionPaid;
     }
 }

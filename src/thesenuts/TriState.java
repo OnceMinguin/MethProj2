@@ -13,9 +13,9 @@ public class TriState extends NonResident{
     private static final int NY_DISCOUNT = 4000;
     private static final int CT_DISCOUNT = 5000;
     private Boolean triState;
-    public TriState(String name, Major major, int creditHours, String triState){
-        super(name,major, creditHours);
-        if (triState.equals("NY")){
+    public TriState(String name, Major major, int creditHours, String triState, String type){
+        super(name,major, creditHours, type);
+        if (triState.equals("ny")){
             this.triState = NEW_YORK;
         }
         else{
@@ -25,21 +25,21 @@ public class TriState extends NonResident{
     @Override
     public void tuitionDue() {
         double tuitionDue = INITIAL_TUITION;
-        if (this.creditHours > CREDIT_FULL){
+        if (this.creditHours >= CREDIT_FULL){
             tuitionDue = FULL_NONRESIDENT + UNIVERSITY_FEE ;
             if (this.creditHours > CREDIT_OVERLOAD){
-                tuitionDue += PART_NONRESIDENT * (this.creditHours - 16);
+                tuitionDue += PART_NONRESIDENT * (this.creditHours - CREDIT_OVERLOAD);
+            }
+            if (!this.triState){
+                tuitionDue -= NY_DISCOUNT;
+            }
+            else{
+                tuitionDue -= CT_DISCOUNT;
             }
         }
         else{
             tuitionDue = (PART_NONRESIDENT * this.creditHours) + PART_TIME_DEPRECIATION * UNIVERSITY_FEE;
         }
-        if (this.triState == NEW_YORK){
-            tuitionDue -= NY_DISCOUNT;
-        }
-        else{
-            tuitionDue -= CT_DISCOUNT;
-        }
-        this.tuitionDue = tuitionDue;
+        this.tuitionDue = tuitionDue - this.tuitionPaid;
     }
 }

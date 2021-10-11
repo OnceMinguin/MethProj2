@@ -57,7 +57,7 @@ public class Date implements Comparable<Date> {
      * @return true if date is valid and false otherwise
      */
     public boolean isValid() {
-        if (this.year > THIS_YEAR) {
+        if (this.year > THIS_YEAR || this.year < THIS_YEAR) {
             return false;
         }
         int month = this.month - SUBTRACT_TO_COMPARE;
@@ -82,7 +82,15 @@ public class Date implements Comparable<Date> {
                 return false;
             }
         }
-        return true;
+
+        if (this.year > calendar.get(Calendar.YEAR)){
+            return false;
+        }
+        else if (this.year == calendar.get(Calendar.YEAR) && month > calendar.get(Calendar.MONTH)){
+            return false;
+        }
+        else return this.year != calendar.get(Calendar.YEAR) || month != calendar.get(Calendar.MONTH)
+                    || this.day <= calendar.get(Calendar.DATE);
     }
 
     /**

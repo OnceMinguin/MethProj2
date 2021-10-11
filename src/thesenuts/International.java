@@ -9,8 +9,8 @@ public class International extends Student{
         private static final int CREDIT_OVERLOAD = 16;
         private static final int EXTRA_CREDIT_EXPENSE = 966;
         private Boolean studyAbroad;
-        public International(String name, Major major, int creditHours, boolean studyAbroad){
-            super(name,major, creditHours);
+        public International(String name, Major major, int creditHours, boolean studyAbroad, String type){
+            super(name,major, creditHours, type);
             this.studyAbroad = studyAbroad;
         }
         @Override
@@ -25,6 +25,6 @@ public class International extends Student{
             else{
                 tuitionDue = UNIVERSITY_FEE + ADDITIIONAL_FEE;
             }
-            this.tuitionDue = tuitionDue;
+            this.tuitionDue = tuitionDue - this.tuitionPaid;
         }
 }

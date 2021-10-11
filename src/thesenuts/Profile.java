@@ -8,7 +8,7 @@ public class Profile {
         this.major = major;
     }
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) {;
         if(obj instanceof Profile){
             Profile comp = (Profile) obj;
             return this.name.equals(comp.name) && this.major.equals(comp.major);
@@ -25,4 +25,7 @@ public class Profile {
         return profile;
     }
 
+    public String getName(){
+        return this.name.toString();
+    }
 }
