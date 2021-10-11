@@ -53,12 +53,7 @@ public class Student {
      * @return the string of the student's data
      */
     public String toString(){
-        if (date == null){
-            return profile.toString() + ":" + creditHours + " credit hours:tuition due:" + tuitionDue +
-                    ":total payment:" + tuitionPaid + ":last payment date:--/--/--:" + type;
-        }
-        return profile.toString() + ":" + creditHours + " credit hours:tuition due:" + tuitionDue +
-                ":total payment:" + tuitionPaid + ":last payment date:" + date + ":" + type;
+        return "";
     }
 
     /**

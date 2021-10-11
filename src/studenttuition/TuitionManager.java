@@ -2,6 +2,12 @@ package studenttuition;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+/**
+ * Takes in commands and runs the corresponding tasks as necessary
+ * Checks for erros on the commmand line.
+ *
+ * @author Andy Li, Henry Lin
+ */
 public class TuitionManager {
         Roster roster;
 
@@ -31,16 +37,16 @@ public class TuitionManager {
                         } else if (command.equals("R")) {
                                 removeStudent(tokenizer);
                         } else if (command.equals("C")) {
-                                calculateTuition(line, tokenizer);
+                                calculateTuition(tokenizer);
                         } else if (command.equals("T")) {
-                                payTuition(line, tokenizer);
+                                payTuition(tokenizer);
                         } else if (command.equals("S")) {
-                                studyAbroad(line, tokenizer);
+                                studyAbroad(tokenizer);
                         } else if (command.equals("F")) {
-                                financialAid(line, tokenizer);
+                                financialAid(tokenizer);
                         } else if ((command.equals("PN") || command.equals("PT")
                                 || command.equals("P")) && !tokenizer.hasMoreTokens()) {
-                                display(line, command);
+                                display(command);
                         } else if (command.equals("Q")) {
                                 break;
                         } else {
@@ -50,6 +56,7 @@ public class TuitionManager {
                 System.out.println("\nTuition Manager terminated.");
         }
 
+        // statics used
         private static final int FIRST_PARAMETER = 0;
         private static final int SECOND_PARAMETER = 1;
         private static final int THIRD_PARAMETER = 2;
@@ -66,13 +73,13 @@ public class TuitionManager {
         private static final int INVALID_AWARD = 5;
 
         /**
-         * Adds student with its respective parameters to the roster
+         * Adds a resident student to the roster
          *
          * @param tokenizer
          */
         private void addResident(StringTokenizer tokenizer) {
                 int counter = FIRST_PARAMETER;
-                String name = new String(), major = new String(), state = new String();
+                String name = "", major = "", state = "";
                 boolean studyAbroad;
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
@@ -81,7 +88,7 @@ public class TuitionManager {
                         } else if (counter == SECOND_PARAMETER) {
                                 major = tokenizer.nextToken();
                         } else if (counter == THIRD_PARAMETER) {
-                                String fakeCredits = new String();
+                                String fakeCredits;
                                 fakeCredits = tokenizer.nextToken();
                                 if (fakeCredits.matches("[a-zA-Z]+")){
                                         System.out.println("Invalid credit hours");
@@ -109,7 +116,7 @@ public class TuitionManager {
                         case "ee" -> student = new Resident(name, Major.EE, credits, "resident");
                         case "me" -> student = new Resident(name, Major.ME, credits, "resident");
                         default -> nonMajor = true;
-                };
+                }
                 if (nonMajor){
                          System.out.println("'" + major + "' is not a valid major.");
                          return;
@@ -131,9 +138,14 @@ public class TuitionManager {
                 }
         }
 
+        /**
+         * adds a non-resident student to the roster
+         *
+         * @param tokenizer
+         */
         private void addNonresident(StringTokenizer tokenizer){
                 int counter = FIRST_PARAMETER;
-                String name = new String(), major = new String(), state = new String();
+                String name = "", major = "", state = "";
                 boolean studyAbroad;
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
@@ -169,7 +181,7 @@ public class TuitionManager {
                         case "ee" -> student = new NonResident(name, Major.EE, credits, "non-resident");
                         case "me" -> student = new NonResident(name, Major.ME, credits, "non-resident");
                         default -> notMajor = true;
-                };
+                }
                 if (notMajor) {
                         System.out.println("'" + major + "' is not a valid major.");
                         return;
@@ -191,9 +203,14 @@ public class TuitionManager {
                 }
         }
 
+        /**
+         * adds a tri-state student to the roster
+         *
+         * @param tokenizer
+         */
         private void addTristate(StringTokenizer tokenizer){
                 int counter = FIRST_PARAMETER;
-                String name = new String(), major = new String(), state = new String();
+                String name = "", major = "", state = "";
                 boolean studyAbroad;
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
@@ -237,7 +254,7 @@ public class TuitionManager {
                         case "ee" -> student = new TriState(name, Major.EE, credits, state, "non-resident(tri-state):" + state);
                         case "me" -> student = new TriState(name, Major.ME, credits, state, "non-resident(tri-state):" + state);
                         default -> notMajor = true;
-                };
+                }
                 if (notMajor){
                         System.out.println("'" + major + "' is not a valid major.");
                         return;
@@ -259,9 +276,14 @@ public class TuitionManager {
                 }
         }
 
+        /**
+         * adds an international student to the roster
+         *
+         * @param tokenizer
+         */
         private void addInternational(StringTokenizer tokenizer){
                 int counter = FIRST_PARAMETER;
-                String name = new String(), major = new String(), state = new String();
+                String name = "", major = "", state = "";
                 boolean studyAbroad = false;
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
@@ -299,7 +321,7 @@ public class TuitionManager {
                         case "ee" -> student = new International(name, Major.EE, credits, studyAbroad, "non-resident:international");
                         case "me" -> student = new International(name, Major.ME, credits, studyAbroad, "non-resident:international");
                         default -> notMajor = true;
-                };
+                }
                 if (notMajor){
                         System.out.println("'" + major + "' is not a valid major.");
                         return;
@@ -324,9 +346,14 @@ public class TuitionManager {
                 }
         }
 
+        /**
+         * removes a student from the roster
+         *
+         * @param tokenizer
+         */
         private void removeStudent(StringTokenizer tokenizer) {
                 int counter = FIRST_PARAMETER;
-                String name = new String(), major = new String();
+                String name = "", major = "";
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
                         if (counter == FIRST_PARAMETER) {
@@ -342,7 +369,7 @@ public class TuitionManager {
                 }
                 Student student = new Student();
                 major = major.toLowerCase();
-                Boolean notMajor = false;
+                boolean notMajor = false;
                 switch (major){
                         case "cs" -> student = new Student(name, Major.CS, credits, "");
                         case "it" -> student = new Student(name, Major.IT, credits, "");
@@ -351,7 +378,7 @@ public class TuitionManager {
                         case "me" -> student = new Student(name, Major.ME, credits, "");
                         default -> notMajor = true;
 
-                };
+                }
                 if (notMajor){
                         System.out.println("'" + major + "' is not a valid major.");
                         return;
@@ -363,15 +390,25 @@ public class TuitionManager {
                 }
         }
 
-        private void calculateTuition(String text, StringTokenizer tokenizer) {
+        /**
+         * calculates the tuition of all students on the roster
+         *
+         * @param tokenizer
+         */
+        private void calculateTuition(StringTokenizer tokenizer) {
                 roster.calculateTuition();
                 System.out.println("Calculation completed.");
         }
 
-        private void payTuition(String text, StringTokenizer tokenizer) {
+        /**
+         * pays the tuition of a student at a specific date in 2021
+         *
+         * @param tokenizer
+         */
+        private void payTuition(StringTokenizer tokenizer) {
                 int counter = FIRST_PARAMETER;
-                String name = new String(), major = new String();
-                Double tuitionPayment = DECISTARTING_CREDITS;
+                String name = "", major = "";
+                double tuitionPayment = DECISTARTING_CREDITS;
                 Date date = new Date();
                 while (tokenizer.hasMoreTokens()) {
                         if (counter == FIRST_PARAMETER) {
@@ -404,7 +441,7 @@ public class TuitionManager {
                 }
                 Student student = new Student();
                 major = major.toLowerCase();
-                Boolean notMajor = false;
+                boolean notMajor = false;
                 switch (major) {
                         case "cs" -> student = new Student(name, Major.CS, VALID_CREDITS, "");
                         case "it" -> student = new Student(name, Major.IT, VALID_CREDITS, "");
@@ -414,7 +451,6 @@ public class TuitionManager {
                         default -> notMajor = true;
 
                 }
-                ;
                 if (notMajor) {
                         System.out.println("'" + major + "' is not a valid major.");
                         return;
@@ -427,9 +463,14 @@ public class TuitionManager {
                 }
         }
 
-        private void studyAbroad(String text, StringTokenizer tokenizer) {
+        /**
+         * changes an international student's study abroad status
+         *
+         * @param tokenizer
+         */
+        private void studyAbroad(StringTokenizer tokenizer) {
                 int counter = FIRST_PARAMETER;
-                String name = new String(), major = new String();
+                String name = "", major = "";
                 boolean studyAbroad = true;
                 Date date = new Date();
                 while (tokenizer.hasMoreTokens()) {
@@ -444,7 +485,7 @@ public class TuitionManager {
                 }
                 Student student = new Student();
                 major = major.toLowerCase();
-                Boolean notMajor = false;
+                boolean notMajor = false;
                 switch (major){
                         case "cs" -> student = new Student(name, Major.CS, VALID_CREDITS, "");
                         case "it" -> student =new Student(name, Major.IT, VALID_CREDITS, "");
@@ -453,7 +494,7 @@ public class TuitionManager {
                         case "me" -> student =new Student(name, Major.ME, VALID_CREDITS, "");
                         default -> notMajor = true;
 
-                };
+                }
                 if (notMajor) {
                         System.out.println("'" + major + "' is not a valid major.");
                         return;
@@ -465,9 +506,14 @@ public class TuitionManager {
                 }
         }
 
-        private void financialAid(String text, StringTokenizer tokenizer) {
+        /**
+         * awards a resident student financial aid
+         *
+         * @param tokenizer
+         */
+        private void financialAid(StringTokenizer tokenizer) {
                 int counter = FIRST_PARAMETER;
-                String name = new String(), major = new String();
+                String name = "", major = "";
                 double financialAid = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
                         if (counter == FIRST_PARAMETER) {
@@ -495,7 +541,7 @@ public class TuitionManager {
                 }
                 Student student = new Student();
                 major = major.toLowerCase();
-                Boolean notMajor = false;
+                boolean notMajor = false;
                 switch (major){
                         case "cs" -> student = new Student(name, Major.CS, VALID_CREDITS, "");
                         case "it" -> student = new Student(name, Major.IT, VALID_CREDITS, "");
@@ -504,7 +550,7 @@ public class TuitionManager {
                         case "me" -> student = new Student(name, Major.ME, VALID_CREDITS, "");
                         default -> notMajor = true;
 
-                };
+                }
                 if (notMajor){
                         System.out.println("'" + major + "' is not a valid major.");
                         return;
@@ -525,7 +571,13 @@ public class TuitionManager {
                 }
         }
 
-        private void display(String text, String command) {
+        /**
+         * Displays the entire roster with one of the printing methods
+         * Can be displayed randomly, sorted by name, or sorted by payment date
+         *
+         * @param command stores the method to print the roster
+         */
+        private void display(String command) {
                 if (roster.isEmpty()) {
                         System.out.println("Student roster is empty!");
                 } else if (command.equals("P")){

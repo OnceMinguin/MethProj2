@@ -1,9 +1,17 @@
 package studenttuition;
 
+/**
+ * This class stores a roster of all the students
+ * in an array list and performs the necessary
+ * functions needed upon the roster.
+ *
+ * @author Andy Li, Henry Lin
+ */
 public class Roster {
     private Student[] roster;
     private int size; //keep track of the number of students in the roster
 
+    // statics used
     private static final int NOT_FOUND = -1;
     private static final int START = 0;
     private static final int GROWTH_CONSTANT = 4;
@@ -21,6 +29,12 @@ public class Roster {
     private static final int AWARD_ELIGIBLE = 4;
     private static final int INVALID_AWARD = 5;
 
+    /**
+     * finds a specific student in the roster
+     *
+     * @param student to be found
+     * @return the index of the student in the array list, or -1 if not found
+     */
     private int find(Student student) {
         for (int i = 0; i < size; i++) {
             if (roster[i].profile.equals(student.profile)) {
@@ -30,6 +44,9 @@ public class Roster {
         return NOT_FOUND;
     }
 
+    /**
+     * grows the size of the array list by 4
+     */
     private void grow() {
         Student[] newRoster = new Student[size + GROWTH_CONSTANT];
         if (size >= START) {
@@ -41,6 +58,12 @@ public class Roster {
         }
     }
 
+    /**
+     * adds a student to the roster
+     *
+     * @param student to be added
+     * @return whether or not the student was successfully added
+     */
     public boolean add(Student student) {
         if (size == 0) {
             roster = new Student[GROWTH_CONSTANT];
@@ -56,6 +79,12 @@ public class Roster {
         return true;
     }
 
+    /**
+     * removes a student from the roster
+     *
+     * @param student to be removed
+     * @return whether or not the student was successfully removed
+     */
     public boolean remove(Student student) {
         int index = find(student);
         if (index == NOT_FOUND) {
@@ -74,13 +103,23 @@ public class Roster {
         return true;
     }
 
+    /**
+     * calculates the tuition for every student on the roster
+     */
     public void calculateTuition(){
         for (int i = 0; roster[i] != null; i++){
             roster[i].tuitionDue();
         }
     }
 
-
+    /**
+     * pays the tuition for a specific student
+     *
+     * @param student to pay the tuition for
+     * @param payment the amount the student is paying
+     * @param date the date on which the payment was processed
+     * @return a different integer based on whether the payment succeeded
+     */
     public int payTuition(Student student, double payment, Date date){
         int index = find(student);
         if (!date.isValid()){
@@ -100,6 +139,13 @@ public class Roster {
         return VALID_PAYMENT;
     }
 
+    /**
+     * grants a resident student financial aid
+     *
+     * @param student student to be granted financial aid
+     * @param financialAid amount of financial aid granted
+     * @return a different integer based on whether the financial aid was succesfully granted
+     */
     public int payAid(Student student, double financialAid){
         int index = find(student);
         if (index == -1){
@@ -110,7 +156,8 @@ public class Roster {
             return ALREADY_AWARDED;
         } else if (roster[index].creditHours < 12){
             return PART_TIME_INELIGIBLE;
-        } else if (financialAid <= 10000 && financialAid > 0){
+        }
+        if (financialAid <= 10000 && financialAid > 0){
             roster[index].tuitionDue = roster[index].tuitionDue - financialAid;
             roster[index].setFinancialAid(financialAid);
             return AWARD_ELIGIBLE;
@@ -119,6 +166,14 @@ public class Roster {
         }
     }
 
+    /**
+     * sets an international student's study abroad status to true/false
+     * and recalculates their tuition.
+     *
+     * @param student to be studying abroad
+     * @param studyAbroad the value true/false for the student's status
+     * @return whether the student is able to study abroad
+     */
     public boolean studyAbroad(Student student, Boolean studyAbroad) {
         int index = find(student);
         if (index == -1){
@@ -137,6 +192,9 @@ public class Roster {
         return true;
     }
 
+    /**
+     * prints the entire roster of students
+     */
     public void print() {
         for (int i = 0; i<size; i++){
             System.out.println(roster[i].toString());
@@ -144,15 +202,13 @@ public class Roster {
     } //display the list without specifying the order
 
     /**
-     * prints students who have paid by payment date
+     * prints only students who have paid sorted by payment date
      */
     public void printByPaymentDate() {
         int totalPaid = START;
-        Student newRoster[] = new Student[size];;
+        Student[] newRoster = new Student[size];
         for (int i = 0; i < size; i++) {
-            if (roster[i].date == null){
-                continue;
-            } else {
+            if (roster[i].date != null) {
                 newRoster[totalPaid] = roster[i];
                 totalPaid++;
             }
@@ -175,7 +231,7 @@ public class Roster {
     }
 
     /**
-     * prints album by Genre
+     * prints the entire roster of students sorted by name
      */
     public void printByName() {
         for (int i = 0; i < size - 1; i++){
@@ -196,13 +252,10 @@ public class Roster {
 
     /**
      * checks if the roster is empty
-     * @return true if there is no albums and false otherwise
+     * @return true if there are no students and false otherwise
      */
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
+        return size == 0;
     }
 }
 

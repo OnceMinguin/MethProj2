@@ -8,7 +8,7 @@ package studenttuition;
  * @author Andy Li, Henry Lin
  */
 public class Resident extends Student{
-    private static double financialAid;
+    private double financialAid;
 
     /**
      * Constructor method for all residents
@@ -28,7 +28,6 @@ public class Resident extends Student{
     private static final int FULL_RESIDENT = 12536;
     private static final int PART_RESIDENT = 404;
     private static final int UNIVERSITY_FEE = 3268;
-    private static final int INITIAL_TUITION = 0;
     private static final int CREDIT_FULL = 12;
     private static final int CREDIT_OVERLOAD = 16;
     private static final double PART_TIME_DEPRECIATION = .8;
@@ -38,7 +37,7 @@ public class Resident extends Student{
      */
     @Override
     public void tuitionDue() {
-        double tuitionDue = INITIAL_TUITION;
+        double tuitionDue;
         if (this.creditHours >= CREDIT_FULL){
             tuitionDue = FULL_RESIDENT + UNIVERSITY_FEE;
             if (this.creditHours > CREDIT_OVERLOAD){
@@ -59,10 +58,7 @@ public class Resident extends Student{
      */
     @Override
     public boolean alreadyAwarded(){
-        if (this.financialAid > 0){
-            return true;
-        }
-        return false;
+        return this.financialAid > 0;
     }
 
     /**
@@ -84,22 +80,21 @@ public class Resident extends Student{
      */
     @Override
     public String toString(){
-        if (alreadyAwarded()) {
+        if (this.financialAid == 0) {
             if (date == null){
                 return profile.toString() + ":" + creditHours + " credit hours:tuition due:" + tuitionDue +
-                        ":total payment:" + tuitionPaid + ":last payment date:--/--/--:" + type +
-                        ":financial aid " + financialAid;
+                        ":total payment:" + tuitionPaid + ":last payment date:--/--/--:" + type;
             }
             return profile.toString() + ":" + creditHours + " credit hours:tuition due:" + tuitionDue +
-                    ":total payment:" + tuitionPaid + ":last payment date:" + date + ":" + type +
-                    ":financial aid " + financialAid;
+                    ":total payment:" + tuitionPaid + ":last payment date:" + date + ":" + type;
         }
-
-        if (date == null){
+        if (date == null) {
             return profile.toString() + ":" + creditHours + " credit hours:tuition due:" + tuitionDue +
-                    ":total payment:" + tuitionPaid + ":last payment date:--/--/--:" + type;
+                    ":total payment:" + tuitionPaid + ":last payment date:--/--/--:" + type +
+                    ":financial aid " + this.financialAid;
         }
         return profile.toString() + ":" + creditHours + " credit hours:tuition due:" + tuitionDue +
-                ":total payment:" + tuitionPaid + ":last payment date:" + date + ":" + type;
+                ":total payment:" + tuitionPaid + ":last payment date:" + date + ":" + type +
+                ":financial aid " + this.financialAid;
     }
 }

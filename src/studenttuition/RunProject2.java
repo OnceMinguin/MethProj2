@@ -2,6 +2,7 @@ package studenttuition;
 
 /**
  * Driver class to run Tuition manager
+ *
  * @author Andy Li, Henry Lin
  */
 public class RunProject2 {
