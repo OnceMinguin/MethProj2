@@ -37,7 +37,7 @@ public class TuitionManager {
                         } else if (command.equals("R")) {
                                 removeStudent(tokenizer);
                         } else if (command.equals("C")) {
-                                calculateTuition(tokenizer);
+                                calculateTuition();
                         } else if (command.equals("T")) {
                                 payTuition(tokenizer);
                         } else if (command.equals("S")) {
@@ -79,8 +79,7 @@ public class TuitionManager {
          */
         private void addResident(StringTokenizer tokenizer) {
                 int counter = FIRST_PARAMETER;
-                String name = "", major = "", state = "";
-                boolean studyAbroad;
+                String name = "", major = "";
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
                         if (counter == FIRST_PARAMETER) {
@@ -145,8 +144,7 @@ public class TuitionManager {
          */
         private void addNonresident(StringTokenizer tokenizer){
                 int counter = FIRST_PARAMETER;
-                String name = "", major = "", state = "";
-                boolean studyAbroad;
+                String name = "", major = "";
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
                         if (counter == FIRST_PARAMETER) {
@@ -211,7 +209,6 @@ public class TuitionManager {
         private void addTristate(StringTokenizer tokenizer){
                 int counter = FIRST_PARAMETER;
                 String name = "", major = "", state = "";
-                boolean studyAbroad;
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
                         if (counter == FIRST_PARAMETER) {
@@ -283,7 +280,7 @@ public class TuitionManager {
          */
         private void addInternational(StringTokenizer tokenizer){
                 int counter = FIRST_PARAMETER;
-                String name = "", major = "", state = "";
+                String name = "", major = "";
                 boolean studyAbroad = false;
                 int credits = STARTING_CREDITS;
                 while (tokenizer.hasMoreTokens()) {
@@ -392,10 +389,8 @@ public class TuitionManager {
 
         /**
          * calculates the tuition of all students on the roster
-         *
-         * @param tokenizer
          */
-        private void calculateTuition(StringTokenizer tokenizer) {
+        private void calculateTuition() {
                 roster.calculateTuition();
                 System.out.println("Calculation completed.");
         }

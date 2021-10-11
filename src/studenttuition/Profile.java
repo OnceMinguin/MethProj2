@@ -47,6 +47,11 @@ public class Profile {
         return profile;
     }
 
+    /**
+     * gets the name of the student
+     *
+     * @return string of the student's name
+     */
     public String getName(){
         return this.name.toString();
     }
