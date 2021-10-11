@@ -1,29 +1,8 @@
-package thesenuts;
-import java.util.NoSuchElementException;
+package studenttuition;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-import java.util.InputMismatchException;
 
 public class TuitionManager {
-
-        private static final int FIRST_PARAMETER = 0;
-        private static final int SECOND_PARAMETER = 1;
-        private static final int THIRD_PARAMETER = 2;
-        private static final int FOURTH_PARAMETER = 3;
-        private static final int TOTAL_PARAMETERS = 4;
-        private static final int STARTING_CREDITS = 0;
-        private static final double DECISTARTING_CREDITS = 0;
-        private static final int VALID_CREDITS = 16;
-        private static final int INVALID_DATE = 0;
-        private static final int INVALID_PAYMENT= 1;
-        private static final int OVER_PAY = 2;
-        private static final int VALID_PAYMENT = 3;
-        private static final int STUDENT_NOT_FOUND = 0;
-        private static final int PART_TIME_INELIGIBLE = 1;
-        private static final int ALREADY_AWARDED = 2;
-        private static final int NOT_RESIDENT = 3;
-        private static final int AWARD_ELIGIBLE = 4;
-        private static final int INVALID_AWARD = 5;
         Roster roster;
 
         /**
@@ -70,6 +49,21 @@ public class TuitionManager {
                 }
                 System.out.println("\nTuition Manager terminated.");
         }
+
+        private static final int FIRST_PARAMETER = 0;
+        private static final int SECOND_PARAMETER = 1;
+        private static final int THIRD_PARAMETER = 2;
+        private static final int FOURTH_PARAMETER = 3;
+        private static final int TOTAL_PARAMETERS = 4;
+        private static final int STARTING_CREDITS = 0;
+        private static final double DECISTARTING_CREDITS = 0;
+        private static final int VALID_CREDITS = 16;
+        private static final int OVER_PAY = 2;
+        private static final int STUDENT_NOT_FOUND = 0;
+        private static final int PART_TIME_INELIGIBLE = 1;
+        private static final int ALREADY_AWARDED = 2;
+        private static final int NOT_RESIDENT = 3;
+        private static final int INVALID_AWARD = 5;
 
         /**
          * Adds student with its respective parameters to the roster
@@ -196,6 +190,7 @@ public class TuitionManager {
                         System.out.println("Student is already in the roster.");
                 }
         }
+
         private void addTristate(StringTokenizer tokenizer){
                 int counter = FIRST_PARAMETER;
                 String name = new String(), major = new String(), state = new String();
@@ -263,6 +258,7 @@ public class TuitionManager {
                         System.out.println("Student is already in the roster.");
                 }
         }
+
         private void addInternational(StringTokenizer tokenizer){
                 int counter = FIRST_PARAMETER;
                 String name = new String(), major = new String(), state = new String();
@@ -327,6 +323,7 @@ public class TuitionManager {
                         System.out.println("Student is already in the roster.");
                 }
         }
+
         private void removeStudent(StringTokenizer tokenizer) {
                 int counter = FIRST_PARAMETER;
                 String name = new String(), major = new String();
@@ -467,6 +464,7 @@ public class TuitionManager {
                         System.out.println("Couldn't find the international student.");
                 }
         }
+
         private void financialAid(String text, StringTokenizer tokenizer) {
                 int counter = FIRST_PARAMETER;
                 String name = new String(), major = new String();

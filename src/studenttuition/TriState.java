@@ -1,6 +1,34 @@
-package thesenuts;
+package studenttuition;
 
+/**
+ * This is the child class of the non-resident class.
+ * This class calculates the amount of tuition due
+ * for tri-state students only.
+ *
+ * @author Andy Li, Henry Lin
+ */
 public class TriState extends NonResident{
+    private Boolean triState;
+
+    /**
+     * Constructor method for all tri-state students
+     *
+     * @param name student name
+     * @param major student major
+     * @param creditHours number of credits the student is taking
+     * @param triState either NY or CT based on where the student is from
+     * @param type type of student -> resident/non-resident
+     */
+    public TriState(String name, Major major, int creditHours, String triState, String type){
+        super(name,major, creditHours, type);
+        if (triState.equals("ny")){
+            this.triState = NEW_YORK;
+        } else{
+            this.triState = CONNETICUT;
+        }
+    }
+
+    // statics used
     private static final int FULL_NONRESIDENT = 29737;
     private static final int PART_NONRESIDENT = 966;
     private static final int UNIVERSITY_FEE = 3268;
@@ -12,16 +40,10 @@ public class TriState extends NonResident{
     private static final Boolean CONNETICUT = true;
     private static final int NY_DISCOUNT = 4000;
     private static final int CT_DISCOUNT = 5000;
-    private Boolean triState;
-    public TriState(String name, Major major, int creditHours, String triState, String type){
-        super(name,major, creditHours, type);
-        if (triState.equals("ny")){
-            this.triState = NEW_YORK;
-        }
-        else{
-            this.triState = CONNETICUT;
-        }
-    }
+
+    /**
+     * Calculates the tuition due for all tri-state students.
+     */
     @Override
     public void tuitionDue() {
         double tuitionDue = INITIAL_TUITION;

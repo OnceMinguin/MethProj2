@@ -1,10 +1,11 @@
-package thesenuts;
+package studenttuition;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 
 /**
  * This class stores and compares dates and checks if the dates are valid.
  * Stores day, month and year to validate, access and compare.
+ *
  * @author Andy Li, Henry Lin
  */
 
@@ -27,13 +28,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Constructor method given no parameters.
-     * Sets the date to current date.
      */
     public Date() {
-        Calendar calendar = Calendar.getInstance();
-        this.month = calendar.get(Calendar.MONTH);
-        this.day = calendar.get(Calendar.DATE);
-        this.year = calendar.get(Calendar.YEAR);
     } //create an object with today’s date (see Calendar class)
 
     // statics

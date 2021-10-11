@@ -1,4 +1,4 @@
-package thesenuts;
+package studenttuition;
 
 /**
  * Driver class to run Tuition manager

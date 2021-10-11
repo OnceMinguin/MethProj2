@@ -1,6 +1,9 @@
-package thesenuts;
+package studenttuition;
 
 public class Roster {
+    private Student[] roster;
+    private int size; //keep track of the number of students in the roster
+
     private static final int NOT_FOUND = -1;
     private static final int START = 0;
     private static final int GROWTH_CONSTANT = 4;
@@ -17,8 +20,6 @@ public class Roster {
     private static final int NOT_RESIDENT = 3;
     private static final int AWARD_ELIGIBLE = 4;
     private static final int INVALID_AWARD = 5;
-    private Student[] roster;
-    private int size; //keep track of the number of students in the roster
 
     private int find(Student student) {
         for (int i = 0; i < size; i++) {
@@ -30,25 +31,24 @@ public class Roster {
     }
 
     private void grow() {
-        Student[] newRoster = new Student[size + 4];
+        Student[] newRoster = new Student[size + GROWTH_CONSTANT];
         if (size >= START) {
             int index = START;
             for (int i = 0; i < size; i++) {
                 newRoster[i] = roster[i];
             }
             roster = newRoster;
-            //System.arraycopy(roster, 0, newroster, 0, size);
         }
     }
 
     public boolean add(Student student) {
         if (size == 0) {
-            roster = new Student[4];
+            roster = new Student[GROWTH_CONSTANT];
         }
         if (find(student) != NOT_FOUND) {
             return false;
         }
-        if (size % 4 == 0) {
+        if (size % GROWTH_CONSTANT == 0) {
             grow();
         }
 
@@ -104,17 +104,13 @@ public class Roster {
         int index = find(student);
         if (index == -1){
             return STUDENT_NOT_FOUND;
-        }
-        if (!roster[index].type.equals("resident")){
+        } else if (!roster[index].type.equals("resident")){
             return NOT_RESIDENT;
-        }
-        if (roster[index].alreadyAwarded()){
+        }  else if (roster[index].alreadyAwarded()){
             return ALREADY_AWARDED;
-        }
-        if (roster[index].creditHours < 12){
+        } else if (roster[index].creditHours < 12){
             return PART_TIME_INELIGIBLE;
-        }
-        if (financialAid <= 10000 && financialAid > 0){
+        } else if (financialAid <= 10000 && financialAid > 0){
             roster[index].tuitionDue = roster[index].tuitionDue - financialAid;
             roster[index].setFinancialAid(financialAid);
             return AWARD_ELIGIBLE;
@@ -127,14 +123,14 @@ public class Roster {
         int index = find(student);
         if (index == -1){
             return false;
-        }
-        if (studyAbroad) {
+        } else if (studyAbroad) {
             if (roster[index].creditHours > 12) {
                 roster[index].creditHours = 12;
             }
             roster[index].tuitionPaid = 0;
             roster[index].date = null;
             roster[index].tuitionDue = ADDITIONAL_FEE + UNIVERSITY_FEE;
+            roster[index].studyingAbroad(studyAbroad);
         } else {
             return false;
         }
@@ -161,6 +157,7 @@ public class Roster {
                 totalPaid++;
             }
         }
+
         for (int i = 0; i < totalPaid - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < totalPaid; j++) {
